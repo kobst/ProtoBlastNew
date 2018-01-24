@@ -11,10 +11,14 @@ import INTULocationManager
 
 class SplashViewController: UIViewController {
   
+    @IBOutlet weak var imageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
 //        let userUIDfake = "Vk8DAXariGZWyIiVdO4apcatEo73"
+       
+       imageView.image = #imageLiteral(resourceName: "raven")
         Session.sharedSession.setCurrentUser() { success in
             if success {
       

@@ -20,57 +20,6 @@ import TwitterKit
 // maybe lat lon as doubles.......
 
 
-class Attempt {
-    var lat: CLLocationDegrees
-    var lon: CLLocationDegrees
-    var time: String
-    var target: String
-    var taker: String
-    var photo = UIImage(named: "beckett")!
-    var success: Bool
-    
-    init(target: String, taker: String, location: CLLocation, photo: UIImage, success: Bool) {
-        lat = location.coordinate.latitude
-        lon = location.coordinate.longitude
-        time = String(describing: Date())
-        self.target = target
-        self.taker = taker
-        self.photo = photo
-        self.success = success
-    }
-    
-    
-    init(snapshot: DataSnapshot) {
-        
-        let dict = snapshot.value as! [String : Any]
-        lat = dict["lat"] as! CLLocationDegrees
-        lon = dict["lon"] as! CLLocationDegrees
-        time = dict["time"] as! String
-        target = dict["target"] as! String
-        taker = dict["taker"] as! String
-        let successString = dict["success"] as! String
-        success = successString == "fail" ? false : true
-        
-        let imageUrlString = dict["photo"] as! String
-        let imageURL = URL(string: imageUrlString)
-      
-        Model.shared.fetchImage(stringURL: imageURL!) { (image) in
-            if let returnedImage = image {
-                
-                self.photo = returnedImage
-                
-            }
-
-        }
-        
-        
-        
-    }
-    
-    
-    
-}
-
 struct PermisisionManager {
     static var cameraAccessGranted : Bool {
         return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == .authorized
@@ -138,6 +87,7 @@ class Model {
     var myScreenOrigin = CGPoint(x: 0, y: 100)
     var dateFormatter = DateFormatter()
 
+    
     var userTargets: [UserTarget] = []
     var tweetTargets: [TweetTarget] = []
     var userTargetsByDistance: [UserTarget] {
@@ -154,25 +104,26 @@ class Model {
     }
     
     
+    
     weak var addTargetDelegate: AddTargetProtocol?
     
-    weak var addBlipDelegate: AddBlips?
+//    weak var addBlipDelegate: AddBlips?
     
-    weak var moveSpriteDelegate: MoveSprites?
+//    weak var moveSpriteDelegate: MoveSprites?
     
-    weak var addScnTargetDelegate: CreateScnTargets?
-    
-    weak var moveScnTargetDelegate: MoveSceneTargets?
+//    weak var addScnTargetDelegate: CreateScnTargets?
+////
+//    weak var moveScnTargetDelegate: MoveSceneTargets?
     
 
     
     let ref = Database.database().reference()
 //    let geoFire = GeoFire(firebaseRef: FIRDatabase.database().reference(withPath: "user_locations"))
 
-    func moveScnTargets(translation: CGPoint) {
-        
-        moveScnTargetDelegate?.handlePan(translation: translation)
-    }
+//    func moveScnTargets(translation: CGPoint) {
+//
+//        moveScnTargetDelegate?.handlePan(translation: translation)
+//    }
     
     func fetchUser(UID: String, completionHandler: @escaping (User?) -> ()){
         ref.child("users").child(UID).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -217,86 +168,16 @@ class Model {
     
 
 
-    func getTargetNew(myLocation: CLLocation) {
-        
-        var uids = [(String, CLLocation)]()
-        
-        let geoFire = GeoFire(firebaseRef: ref.child("user_locations"))
-        //        var targets = [Target]()
-        //        let fakeLocation = makeFakeLocation()
-        let circleQuery = geoFire?.query(at: myLocation, withRadius: 2.5)
-        
-        circleQuery?.observe(.keyEntered, with: { [weak self] (string, location) in
-            if let validUID = string, let locationBack = location {
-                
-                let tuple = (validUID, locationBack)
-                uids.append(tuple)
-                
-                self?.ref.child("users/\(validUID)").observe(.value, with: { [weak self] snapshot in
-            
-                    let userTarget = UserTarget(snapshot: snapshot, location: locationBack)
-                
-                    self?.userTargets.append(userTarget)
-                
-                    self?.addBlipDelegate?.addTargetBlips(target: userTarget)
-                })
-            
-            }}
-            )
-        
-    }
+
     
     
-    func moveSprites(translation: CGPoint) {
-        
-        moveSpriteDelegate?.handlePanFrom(translation: translation)
-        
-    }
-    
-    func getTargetsNewVerComp(myLocation: CLLocation, closure: (@escaping() -> Void)) {
-        
-        var uids = [(String, CLLocation)]()
-        
-        let geoFire = GeoFire(firebaseRef: ref.child("user_locations"))
-        //        var targets = [Target]()
-        //        let fakeLocation = makeFakeLocation()
-        if let circleQuery = geoFire?.query(at: myLocation, withRadius: 2.5) {
-            
-            _ = circleQuery.observe(.keyEntered, with: {(string, location) in
-                if let validUID = string, let locationBack = location {
-                    let tuple = (validUID, locationBack)
-                    uids.append(tuple)
-                    }
-                }
-            )
-            circleQuery.observeReady( {
-                print(uids.count)
-                print("\n-------observeReady-------\n ")
-                for (x,y) in uids {
-                    
-                    self.ref.child("users/\(x)").observe(.value, with: { [weak self] snapshot in
-                        
-                        let userTarget = UserTarget(snapshot: snapshot, location: y)
-                        
-                        self?.userTargets.append(userTarget)
-                        
-                        self?.addBlipDelegate?.addTargetBlips(target: userTarget)
-//
-//                        self?.addTargetDelegate?.addTargetSpritesNew(target: userTarget)
-                        self?.addTargetDelegate?.addTargetSpritesNew(target: userTarget, pos: CGPoint(x: 0.0, y: 0.0))
-//                        self?.addScnTargetDelegate?.createScnTargets(target: userTarget)
-                        
-                        print(uids.count)
-                    })
-                }
-    
-                closure()
-                
-                
-            })
-    }
-    }
-    
+//    func moveSprites(translation: CGPoint) {
+//        
+//        moveSpriteDelegate?.handlePanFrom(translation: translation)
+//        
+//    }
+//    
+
     
     
     
@@ -323,9 +204,7 @@ class Model {
                         let userTarget = UserTarget(snapshot: snapshot, location: locationBack)
                         
                         self?.userTargets.append(userTarget)
-                        
-                        self?.addBlipDelegate?.addTargetBlips(target: userTarget)
-                        
+                
                         print(uids.count)
                         
                         dG.leave()
@@ -363,34 +242,6 @@ class Model {
     
     
     
-    
-    func setNewAttempt(attempt: Attempt) {
-        
-        let result = attempt.success ? "success" : "fail"
-        let baseRef = Database.database().reference()
-        let ref = baseRef.child("attempts").childByAutoId()
-        let data = UIImageJPEGRepresentation(attempt.photo, 0.1)!
-        let storageRef = Storage.storage().reference()
-        let imageUID = NSUUID().uuidString
-        let imageRef = storageRef.child(imageUID)
-        imageRef.putData(data, metadata: nil).observe(.success) { (snapshot) in
-            let imageURL = snapshot.metadata?.downloadURL()?.absoluteString
-            
-            let attemptData = [
-                "target": attempt.target,
-                "taker": attempt.taker,
-                "lat": attempt.lat,
-                "lon": attempt.lon,
-                "time": attempt.time,
-                "photo": imageURL ?? "no photo available",
-                "success": result
-        ] as [String : Any]
-        
-        ref.setValue(attemptData)
-        
-    }
-    
-    }
     
 
    

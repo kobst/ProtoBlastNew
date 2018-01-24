@@ -111,7 +111,6 @@ class LocationService {
                         let userTarget = UserTarget(snapshot: snapshot, location: locationBack)
                         
                         Model.shared.userTargets.append(userTarget)
-                        Model.shared.addBlipDelegate?.addTargetBlips(target: userTarget)
                         
                         print(uids.count)
                         

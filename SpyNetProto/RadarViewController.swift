@@ -34,17 +34,20 @@ class CustomAnnotationView: MGLAnnotationView {
     }
 }
 
+//
+//protocol AddBlips: class {
+//    func addTargetBlips(target: UserTarget)
+//}
 
-protocol AddBlips: class {
-    func addTargetBlips(target: UserTarget)
+
+protocol GoToDetail: class {
+    func goToDetail(target: TargetSpriteNew)
 }
 
-
-class RadarViewController: UIViewController, MGLMapViewDelegate {
+class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
 
     @IBOutlet weak var overlay: UIView!
 
-    @IBOutlet weak var buttonView: UIView!
 
     var myLocation: CLLocationCoordinate2D!
 
@@ -54,6 +57,8 @@ class RadarViewController: UIViewController, MGLMapViewDelegate {
     
     var genTargets: [UserTarget] = []
     
+    var selectedTarget: TargetSpriteNew?
+    
     var cameraMap = MGLMapCamera()
 
     @IBOutlet weak var sceneView: SKView!
@@ -62,98 +67,33 @@ class RadarViewController: UIViewController, MGLMapViewDelegate {
     
     @IBOutlet weak var radarMap: MGLMapView!
 
-    @IBAction func goPlayNew(_ sender: Any) {
-        
-        
-        Model.shared.myLocation = CLLocation(latitude: radarMap.centerCoordinate.latitude, longitude: radarMap.centerCoordinate.longitude)
-        
-        Session.sharedSession.myLocation = CLLocationCoordinate2D(latitude: radarMap.centerCoordinate.latitude, longitude: radarMap.centerCoordinate.longitude)
-        
-         performSegue(withIdentifier: "toPlay", sender: nil)
 
+    func goToDetail(target: TargetSpriteNew) {
+        selectedTarget = target
+        self.performSegue(withIdentifier: "toTweetDetail", sender: self)
         
-//        performSegue(withIdentifier: "toPlay", sender: nil)
-//        for blip in blips {
-//            blip.removeFromSuperview()
-//        }
-//
-//
-//        if !blipStatus {
-//            addOverlayBlips()
-//            let camera = MGLMapCamera(lookingAtCenter: radarMap.centerCoordinate, fromDistance: 4500, pitch: 150, heading: 80)
-//            
-//            radarMap.setCamera(camera, withDuration: 5, animationTimingFunction: CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut))
-
-//            cameraMap = MGLMapCamera(lookingAtCenter: radarMap.centerCoordinate, fromDistance: 275, pitch: 15, heading: 180)
-//            radarMap.camera = cameraMap
-//
-//            zoomMap()
-//
-//            blipStatus = true
-        
-//            fieldScene = FieldScene(size: radarMap.bounds.size, map: radarMap)
-//    //        scene.addMapScene(map: mapView)
-////            fieldScene.delegateMainVC = self
-//            fieldScene.scaleMode = .aspectFill
-//            sceneView.presentScene(fieldScene)
-            
-//            for target in Model.shared.userTargets {
-//
-//                let pt = radarMap.convert(target.annotation.coordinate, toPointTo: sceneView)
-//
-//                let pt2 = sceneView.convert(pt, to: sceneView.scene!)
-//
-//                let node = TargetSpriteNew(target: target, pos: pt2)
-//                Model.shared.targetSpriteNew.append(node)
-//                fieldScene.addChild(node)
-//
-//                node.isHidden = false
-//                node.animateSize()
-//                node.changePhysicsBody()
-//
-//            }
-//
-//
-//        }
-//
-//        else {
-//
-//            blipStatus = false
-//
-//
-
-//
-////            cameraMap = MGLMapCamera(lookingAtCenter: radarMap.centerCoordinate, fromDistance: 275, pitch: 88, heading: 180)
-////            radarMap.camera = cameraMap
-////
-////            zoomMap()
-//
-//
-//        }
         
     }
-
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toSceneKit" {
-            let vc = segue.destination as! SceneKitViewController
-            vc.map = radarMap
+        if segue.identifier == "toTweetDetail" {
+            let vc = segue.destination as! TweetDetailViewController
+            vc.target = selectedTarget
         }
 
-        if segue.identifier == "toMain" {
-            let vc = segue.destination as! MainViewController
-            vc.mapView = radarMap
-        }
+//        if segue.identifier == "toMain" {
+//            let vc = segue.destination as! MainViewController
+//            vc.mapView = radarMap
+//        }
 
-        if segue.identifier == "toPlay" {
-            let vc = segue.destination as! PlayViewController
-
-            // zoom in/out to get to right annotation view? or zoom in the play view controller. 
-            // or zoom in/out first then show the annotations....
-            vc.mapView = radarMap
-            vc.targets = targets
-
-        }
+//        if segue.identifier == "toPlay" {
+//            let vc = segue.destination as! PlayViewController
+//
+//            // zoom in/out to get to right annotation view? or zoom in the play view controller. 
+//            // or zoom in/out first then show the annotations....
+//            vc.mapView = radarMap
+//            vc.targets = targets
+//
+//        }
 
     }
 
@@ -251,8 +191,6 @@ class RadarViewController: UIViewController, MGLMapViewDelegate {
 
 //        let imageView = UIView()
  
-        
-        view.bringSubview(toFront: buttonView)
         overlay.isUserInteractionEnabled = false
 
         view.backgroundColor = UIColor.black
@@ -261,7 +199,7 @@ class RadarViewController: UIViewController, MGLMapViewDelegate {
         //        scene.addMapScene(map: mapView)
         //            fieldScene.delegateMainVC = self
         Modelv2.shared.addTargetDelegate = fieldScene
-        
+        fieldScene.delegateMainVC = self
         
         fieldScene.scaleMode = .aspectFill
         sceneView.presentScene(fieldScene)
@@ -282,7 +220,6 @@ class RadarViewController: UIViewController, MGLMapViewDelegate {
         
         
         
-        
         Modelv2.shared.getTweets(myLocation: Model.shared.myLocation!) {
              print("done in closure TWEETS /n /n/ n TWEETS")
 //            self.zoomMap()
@@ -291,62 +228,7 @@ class RadarViewController: UIViewController, MGLMapViewDelegate {
         
         }
 
-//        Model.shared.getTargetsNewVerComp2(myLocation: Model.shared.myLocation!) {
-//////
-//////        Modelv2.shared.getTweeterDist(myLocation: Model.shared.myLocation!) {
-////
-////            print("done in closure")
-////
-//////            print(Model.shared.userTargets.count)
-////
-////
-//////            let mapCenter = UIView()
-//////            mapCenter.backgroundColor = UIColor.cyan
-//////            mapCenter.frame.size.width = 12
-//////            mapCenter.frame.size.height = 12
-//////            mapCenter.layer.cornerRadius = 6
-////
-////
-//////            self.overlay.addSubview(mapCenter)
-////
-//            for target in Model.shared.userTargets {
-////
-//////                let pt = self.radarMap.convert(target.annotation.coordinate, toPointTo: self.sceneView)
-//                self.radarMap.addAnnotation(target.annotation)
-//////                let mapPt = self.radarMap.convert(target.annotation.coordinate, toPointTo: self.overlay)
-//////                print(target.annotation.coordinate)
-//////                print("original...")
-//////                print(mapPt)
-//////                let imageView = UIView()
-//////                imageView.backgroundColor = UIColor.cyan
-//////                imageView.frame.size.width = 6
-//////                imageView.frame.size.height = 6
-//////                imageView.layer.cornerRadius = 3
-//                let pt4 = self.convertMapPtToScenePt(point: target.annotation.coordinate)
-//////
-//////                let newY  = mapPt.y - (self.view.frame.height / 2)
-//////                let pt2 = CGPoint(x: mapPt.x, y: newY)
-//////                print("adjusted")
-//////                print(pt2)
-////////
-//////                imageView.center = self.centerScreenPoint
-//////                self.overlay.addSubview(imageView)
-//////                let pt3 = self.overlay.convert(pt2, to: self.sceneView)
-//////                let pt4 = self.sceneView.convert(pt3, to: self.sceneView.scene!)
-////
-////
-//                let node = TargetSpriteNew(target: target, pos: pt4)
-//                Model.shared.targetSpriteNew.append(node)
-//                self.fieldScene.addChild(node)
-//                node.isHidden = false
-//                node.animateSize()
-//                node.changePhysicsBody()
-//                print(node.position)
-//
-//                    }
-////
-////
-//        }
+
 
 
     }

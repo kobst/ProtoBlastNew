@@ -38,12 +38,12 @@ protocol AddTargetProtocol: class {
     
 }
 
-/// TEST 
+
 
 class FieldScene: SKScene, AddTargetProtocol {
     
     weak var delegateMainVC: GoToDetail?
-    weak var delegateSceneKit: MoveSceneTargets?
+//    weak var delegateSceneKit: MoveSceneTargets?
     let center = CGPoint(x: 0, y: 0)
     let circlePath = UIBezierPath(arcCenter: CGPoint(x: 0, y: 0), radius: 10, startAngle: 0, endAngle: CGFloat(M_PI_2), clockwise: true)
     
@@ -116,14 +116,14 @@ class FieldScene: SKScene, AddTargetProtocol {
     }
     
     
-    func addMapScene(map: MGLMapView) {
-        let scn = GameScene(create: true, map: map)
-        let node = SK3DNode(viewportSize: CGSize(width: 1150, height: 750) )
-        node.position = CGPoint(x: 0, y: -100)
-        node.scnScene = scn
-        self.addChild(node)
-    }
-    
+//    func addMapScene(map: MGLMapView) {
+//        let scn = GameScene(create: true, map: map)
+//        let node = SK3DNode(viewportSize: CGSize(width: 1150, height: 750) )
+//        node.position = CGPoint(x: 0, y: -100)
+//        node.scnScene = scn
+//        self.addChild(node)
+//    }
+//
     
     func returnToCenter() {
         
@@ -266,13 +266,16 @@ class FieldScene: SKScene, AddTargetProtocol {
         if let positionInScene = touch?.location(in: self) {
             
             let nodeAtPoint = atPoint(positionInScene)
-            print(nodeAtPoint.name ?? "no name X")
+         
             
             switch nodeAtPoint {
                 
             case is TargetSpriteNew:
-                let targetSpriteNew = nodeAtPoint as! TargetSpriteNew
-                delegateMainVC?.goToUserTarget(target: targetSpriteNew)
+                let selectedTarget = nodeAtPoint as! TargetSpriteNew
+                print(selectedTarget.target.name)
+            
+                delegateMainVC?.goToDetail(target: selectedTarget)
+                
                 
             default:
                 return
@@ -366,8 +369,8 @@ class FieldScene: SKScene, AddTargetProtocol {
             var translation = recognizer.translation(in: recognizer.view!)
             translation = CGPoint(x: translation.x, y: -translation.y)
             //            print("in handle pan changed.....\(translation)")
-            
-            Model.shared.moveScnTargets(translation: translation)
+//
+//            Model.shared.moveScnTargets(translation: translation)
             
             Model.shared.myScreenOrigin = CGPoint(x: Model.shared.myScreenOrigin.x - translation.x, y: Model.shared.myScreenOrigin.y - translation.y)
             cam.position = Model.shared.myScreenOrigin
