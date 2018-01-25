@@ -25,7 +25,6 @@ class SplashViewController: UIViewController {
                 LocationService.getLocation() { success in
                     if success {
                         
-                    
                         self.performSegue(withIdentifier: "toRadar", sender: self)
                     }
                     else {

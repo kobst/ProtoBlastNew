@@ -219,13 +219,10 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
         overlay.addSubview(mapCenter)
         
         
-        
         Modelv2.shared.getTweets(myLocation: Model.shared.myLocation!) {
              print("done in closure TWEETS /n /n/ n TWEETS")
 //            self.zoomMap()
             self.addTweets()
-            
-        
         }
 
 
@@ -242,20 +239,12 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
 
             self.fieldScene.addTargetSpritesNew(target: target, pos: pt4)
             
-            
-//            let node = TargetSpriteNew(target: target, pos: pt4)
-//            Model.shared.targetSpriteNew.append(node)
-//            self.fieldScene.addChild(node)
-//            node.isHidden = false
-//            node.animateSize()
-//            node.changePhysicsBody()
-//            print(node.position)
         }
         
     }
     
     func convertMapPtToScenePt(point: CLLocationCoordinate2D) -> CGPoint {
-        
+// branch extendSpriteSceneII
         let mapPt = self.radarMap.convert(point, toPointTo: self.overlay)
         
         let midY = (self.view.frame.height / 2)
