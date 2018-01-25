@@ -87,16 +87,17 @@ class FieldScene: SKScene, AddTargetProtocol {
         background.size.height = size.height * 10
         background.name = "background"
         background.position = CGPoint(x: 0, y: 100)
-        addChild(background)
+  
+//        addChild(background)
         
         
-        centerNode.size.width = 15
-        centerNode.size.height = 15
-    
-        centerNode.color = UIColor.red
-        centerNode.position = CGPoint(x: 0, y: 0)
-        background.position = CGPoint(x: 0, y: 0)
-        addChild(centerNode)
+//        centerNode.size.width = 15
+//        centerNode.size.height = 15
+//    
+//        centerNode.color = UIColor.red
+//        centerNode.position = CGPoint(x: 0, y: 0)
+//        background.position = CGPoint(x: 0, y: 0)
+//        addChild(centerNode)
         
 //        addMapScene(map: map)
 //        let scn = GameScene(create: true, map: map)
@@ -108,6 +109,7 @@ class FieldScene: SKScene, AddTargetProtocol {
         self.isUserInteractionEnabled = true
         
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+        self.backgroundColor = UIColor.clear
         
 //        self.addChild(mapNode)
         
@@ -408,12 +410,12 @@ class FieldScene: SKScene, AddTargetProtocol {
     override func update(_ currentTime: TimeInterval) {
         cam.position = Model.shared.myScreenOrigin
         
-        if let heading = Model.shared.myHeading {
-            background.zRotation = CGFloat(M_PI * 2) * CGFloat(heading/360)
-            for targetSprite in Model.shared.targetSpriteNew {
-                targetSprite.zRotation = -1 * background.zRotation
-            }
-        }
+//        if let heading = Model.shared.myHeading {
+//            background.zRotation = CGFloat(M_PI * 2) * CGFloat(heading/360)
+//            for targetSprite in Model.shared.targetSpriteNew {
+//                targetSprite.zRotation = -1 * background.zRotation
+//            }
+//        }
         
     }
     

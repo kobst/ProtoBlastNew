@@ -46,7 +46,7 @@ protocol GoToDetail: class {
 
 class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
 
-    @IBOutlet weak var overlay: UIView!
+//    @IBOutlet weak var overlay: UIView!
 
 
     var myLocation: CLLocationCoordinate2D!
@@ -97,20 +97,6 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
 
     }
 
-    func makeSprites() {
-        for point in annotations {
-            let overlayPoint = radarMap.convert(point.coordinate, toPointTo: self.overlay)
-            let imageView = UIView()
-            imageView.backgroundColor = UIColor.cyan
-            imageView.frame.size.width = 20
-            imageView.frame.size.height = 20
-            imageView.layer.cornerRadius = 10
-            imageView.center = overlayPoint
-            overlay.addSubview(imageView)
-
-        }
-
-    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -121,9 +107,9 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        for view in overlay.subviews {
-            view.removeFromSuperview()
-        }
+//        for view in overlay.subviews {
+//            view.removeFromSuperview()
+//        }
         
         
     }
@@ -178,20 +164,7 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
         radarMap.setZoomLevel(16, animated: true)
         radarMap.isUserInteractionEnabled = true
         view.addSubview(radarMap)
-//        sceneView.isHidden = true
-//        view.bringSubview(toFront: overlay)
 
-        let centerScreenPoint: CGPoint = radarMap.convert(radarMap.centerCoordinate, toPointTo: self.overlay)
-        
-//        let myLoc = CLLocationCoordinate2D(latitude: (Model.shared.myLocation?.coordinate.latitude)!, longitude: (Model.shared.myLocation?.coordinate.longitude)!)
-//
-//        let centerScreenPoint: CGPoint = radarMap.convert(myLoc, toPointTo: self.overlay)
-
-//        print("Screen center: \(centerScreenPoint) = \(radarMap.center)")
-
-//        let imageView = UIView()
- 
-        overlay.isUserInteractionEnabled = false
 
         view.backgroundColor = UIColor.black
 
@@ -206,17 +179,18 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
         
         view.bringSubview(toFront: sceneView)
         sceneView.isHidden = false
-        view.bringSubview(toFront: overlay)
+        sceneView.allowsTransparency = true
+//        view.bringSubview(toFront: overlay)
         
         
         
-        let mapCenter = UIView()
-        mapCenter.backgroundColor = UIColor.cyan
-        mapCenter.frame.size.width = 12
-        mapCenter.frame.size.height = 12
-        mapCenter.layer.cornerRadius = 6
-        mapCenter.center = centerScreenPoint
-        overlay.addSubview(mapCenter)
+//        let mapCenter = UIView()
+//        mapCenter.backgroundColor = UIColor.cyan
+//        mapCenter.frame.size.width = 12
+//        mapCenter.frame.size.height = 12
+//        mapCenter.layer.cornerRadius = 6
+//        mapCenter.center = centerScreenPoint
+//        overlay.addSubview(mapCenter)
         
         
         Modelv2.shared.getTweets(myLocation: Model.shared.myLocation!) {
@@ -235,8 +209,8 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
 //            let pt = self.radarMap.convert(target.annotation.coordinate, toPointTo: self.sceneView)
             self.radarMap.addAnnotation(target.annotation)
 //            let mapPt = self.radarMap.convert(target.annotation.coordinate, toPointTo: self.overlay)
+            print(target.annotation.coordinate)
             let pt4 = self.convertMapPtToScenePt(point: target.annotation.coordinate)
-
             self.fieldScene.addTargetSpritesNew(target: target, pos: pt4)
             
         }
@@ -245,16 +219,21 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
     
     func convertMapPtToScenePt(point: CLLocationCoordinate2D) -> CGPoint {
 // branch extendSpriteSceneII
-        let mapPt = self.radarMap.convert(point, toPointTo: self.overlay)
-        
-        let midY = (self.view.frame.height / 2)
-        
-        let newY = mapPt.y - 2*(mapPt.y  - midY)
-     
-        let pt2 = CGPoint(x: mapPt.x, y: newY)
-        let pt3 = self.overlay.convert(pt2, to: self.sceneView)
-        let pt4 = self.sceneView.convert(pt3, to: self.sceneView.scene!)
-        return pt4
+//        let mapPt = self.radarMap.convert(point, toPointTo: self.overlay)
+//
+//        let midY = (self.view.frame.height / 2)
+//
+//        let newY = mapPt.y - 2*(mapPt.y  - midY)
+//
+//        let pt2 = CGPoint(x: mapPt.x, y: newY)
+//        let pt3 = self.overlay.convert(pt2, to: self.sceneView)
+//        let pt4 = self.sceneView.convert(pt3, to: self.sceneView.scene!)
+//        return pt4
+        print(point)
+        let mapPt2 = self.radarMap.convert(point, toPointTo: self.sceneView)
+        print(mapPt2)
+        let pt = self.sceneView.convert(mapPt2, to: self.sceneView.scene!)
+        return pt
     }
     
     

@@ -212,11 +212,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aDe-K3-LJI" customClass="SKView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aDe-K3-LJI" customClass="SKView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="abt-gZ-RaG" userLabel="radarMap" customClass="MGLMapView">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="abt-gZ-RaG" userLabel="radarMap" customClass="MGLMapView">
                                 <rect key="frame" x="0.0" y="285" width="320" height="283"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -228,7 +228,9 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="aDe-K3-LJI" firstAttribute="height" secondItem="mGe-HC-LSW" secondAttribute="height" id="13C-xE-zfS"/>
+                            <constraint firstItem="aDe-K3-LJI" firstAttribute="centerX" secondItem="mGe-HC-LSW" secondAttribute="centerX" id="IDq-YH-5zq"/>
                             <constraint firstItem="aDe-K3-LJI" firstAttribute="width" secondItem="mGe-HC-LSW" secondAttribute="width" id="Ifl-jZ-Zzj"/>
+                            <constraint firstItem="aDe-K3-LJI" firstAttribute="centerY" secondItem="mGe-HC-LSW" secondAttribute="centerY" id="lHE-HD-bhh"/>
                         </constraints>
                     </view>
                     <connections>
