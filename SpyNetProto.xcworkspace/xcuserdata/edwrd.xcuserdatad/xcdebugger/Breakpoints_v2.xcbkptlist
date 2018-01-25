@@ -6,11 +6,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpyNetProto/LocationService.swift"
-            timestampString = "538448523.668534"
+            timestampString = "538503408.833881"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "49"
@@ -58,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpyNetProto/RadarViewController.swift"
-            timestampString = "538448523.668857"
+            timestampString = "538591137.7552871"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "145"
@@ -102,64 +102,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SpyNetProto/FieldSceneNew.swift"
-            timestampString = "538448523.6700931"
+            filePath = "SpyNetProto/RadarViewController.swift"
+            timestampString = "538591137.7825429"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "275"
-            endingLineNumber = "275"
-            landmarkName = "touchesBegan(_:with:)"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SpyNetProto.FieldScene.touchesBegan(Swift.Set&lt;__ObjC.UITouch&gt;, with: Swift.Optional&lt;__ObjC.UIEvent&gt;) -&gt; ()"
-                  moduleName = "SpyNetProto"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/edwrd/Desktop/Blast2018/SpyNetProto/FieldSceneNew.swift"
-                  timestampString = "538448524.245351"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "276"
-                  endingLineNumber = "276"
-                  offsetFromSymbolStart = "683">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SpyNetProto.FieldScene.touchesBegan(Swift.Set&lt;__ObjC.UITouch&gt;, with: Swift.Optional&lt;__ObjC.UIEvent&gt;) -&gt; ()"
-                  moduleName = "SpyNetProto"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/edwrd/Desktop/Blast2018/SpyNetProto/FieldSceneNew.swift"
-                  timestampString = "538448524.25191"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "276"
-                  endingLineNumber = "276"
-                  offsetFromSymbolStart = "958">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SpyNetProto/FieldSceneNew.swift"
-            timestampString = "538448587.239022"
+            filePath = "SpyNetProto/RadarViewController.swift"
+            timestampString = "538591137.785706"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
-            landmarkName = "touchesBegan(_:with:)"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
+            landmarkName = "addTweets()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
