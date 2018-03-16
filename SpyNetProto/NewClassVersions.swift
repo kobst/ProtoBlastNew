@@ -132,7 +132,7 @@ class TweetTarget: TargetNew {
     var lon: CLLocationDegrees
     var distance: Double
     
-     var annotation: MGLPointAnnotation
+    var annotation: MGLPointAnnotation
 //    var origPos: CGPoint
 //    var profileImage: UIImage
     
@@ -305,7 +305,6 @@ class Eater38: TargetNew {
     var phone: String
     var lat: CLLocationDegrees
     var lon: CLLocationDegrees
-    
     
     init(snapshot: DataSnapshot, location: CLLocation) {
         let value = snapshot.value as! [String: Any]!
@@ -603,9 +602,34 @@ class TargetSpriteNew: SKSpriteNode {
 //        let userTarget = target as! UserTarget
 //        profileImageURL = userTarget.avatar
 //        nameLabel.text = userTarget.userName
-        let tweetTarget = target as! TweetTarget
-        profileImageURL = URL(string: tweetTarget.idImageURLString)!
-        nameLabel.text = tweetTarget.senderID
+        
+
+//
+//              let tweetTarget = target as! TweetTarget
+
+        let userTarget = target as! UserTarget
+        profileImageURL = userTarget.avatar
+        nameLabel.text = userTarget.userName
+   
+//        if let tweetTargetOpt = target as? TweetTarget {
+//            let tweetTarget = tweetTargetOpt
+//
+//            profileImageURL = URL(string: tweetTarget.idImageURLString)!
+//            nameLabel.text = tweetTarget.senderID
+//
+//
+//        } else if let userTargetOpt = target as? UserTarget {
+//            let userTarget = userTargetOpt
+//
+//            profileImageURL = userTarget.avatar
+//            nameLabel.text = userTarget.userName
+//
+//        }
+//
+        
+//
+//        profileImageURL = URL(string: tweetTarget.idImageURLString)!
+//        nameLabel.text = tweetTarget.senderID
         
         super.init(texture: myTexture, color: UIColor(), size: CGSize(width: 25, height: 25))
         
@@ -615,19 +639,7 @@ class TargetSpriteNew: SKSpriteNode {
         origPos = position
         
 
-        let path = CGMutablePath()
-        path.addArc(center: CGPoint.zero, // CGPoint.centerNode.
-            radius: self.size.width, //spriteNode.size.width...
-            startAngle: 0,
-            endAngle: (CGFloat.pi * 2) * CGFloat((arc4random()%100) / 100),
-            clockwise: true)
-        timeRing.path = path
-        timeRing.lineWidth = 10
-        timeRing.fillColor = .red
-        timeRing.strokeColor = .white
-        timeRing.glowWidth = 5.5
-        
-        self.addChild(timeRing)
+
         self.addChild(nameLabel)
         
         TargetSpriteNew.allTargetSpriteNew.append(self)
@@ -724,3 +736,19 @@ class ButtonCategoryNode: SKSpriteNode {
 
 //            let group = SKAction.group(actions)
 //            self?.run(group)
+
+//
+//let path = CGMutablePath()
+//path.addArc(center: CGPoint.zero, // CGPoint.centerNode.
+//    radius: self.size.width, //spriteNode.size.width...
+//    startAngle: 0,
+//    endAngle: (CGFloat.pi * 2) * CGFloat((arc4random()%100) / 100),
+//    clockwise: true)
+//timeRing.path = path
+//timeRing.lineWidth = 10
+//timeRing.fillColor = .red
+//timeRing.strokeColor = .white
+//timeRing.glowWidth = 5.5
+//
+//self.addChild(timeRing)
+

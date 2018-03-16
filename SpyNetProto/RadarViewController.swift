@@ -46,13 +46,13 @@ protocol GoToDetail: class {
 
 class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
 
-//    @IBOutlet weak var overlay: UIView!
-
-
+    
     var myLocation: CLLocationCoordinate2D!
 
     var annotations: [MGLAnnotation] = []
 
+    var centerAnnotation = MGLPointAnnotation()
+    
     var targets: [UserTarget] = []
     
     var genTargets: [UserTarget] = []
@@ -70,6 +70,7 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
 
     func goToDetail(target: TargetSpriteNew) {
         selectedTarget = target
+        
         self.performSegue(withIdentifier: "toTweetDetail", sender: self)
         
         
@@ -107,10 +108,6 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        for view in overlay.subviews {
-//            view.removeFromSuperview()
-//        }
-        
         
     }
     
@@ -120,6 +117,7 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
 
         var closestAnnotations: [MGLAnnotation] = []
 
+     
         for target in Model.shared.tweetTargets {
             radarMap.addAnnotation(target.annotation)
 
@@ -137,11 +135,7 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
     }
 
     
-//       override func viewDidAppear(_ animated: Bool)  {
-//        for blip in blips {
-//            blip.removeFromSuperview()
-//        }
-//    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -155,19 +149,21 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
         radarMap.delegate = self
         radarMap.isZoomEnabled = true
         radarMap.isPitchEnabled = true
-        radarMap.latitude = myLocation.latitude
-        radarMap.longitude = myLocation.longitude
-     
+//        radarMap.latitude = myLocation.latitude
+//        radarMap.longitude = myLocation.longitude
+        radarMap.centerCoordinate = myLocation
+        centerAnnotation.coordinate = myLocation
+        radarMap.addAnnotation(centerAnnotation)
         
-        cameraMap = MGLMapCamera(lookingAtCenter: radarMap.centerCoordinate, fromDistance: 75, pitch: 85, heading: 180)
+        cameraMap = MGLMapCamera(lookingAtCenter: radarMap.centerCoordinate, fromDistance: 50, pitch: 86, heading:180)
         radarMap.camera = cameraMap
-        radarMap.setZoomLevel(16, animated: true)
+//        radarMap.setZoomLevel(16, animated: true)
         radarMap.isUserInteractionEnabled = true
         view.addSubview(radarMap)
 
-
         view.backgroundColor = UIColor.black
 
+        
         fieldScene = FieldScene(size: sceneView.bounds.size)
         //        scene.addMapScene(map: mapView)
         //            fieldScene.delegateMainVC = self
@@ -180,34 +176,51 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
         view.bringSubview(toFront: sceneView)
         sceneView.isHidden = false
         sceneView.allowsTransparency = true
+        sceneView.isUserInteractionEnabled = false
+        
+        let cp = convertMapPtToScenePt(point: myLocation)
+//        fieldScene.centerNode.position = cp
+        
+        print(cp)
 //        view.bringSubview(toFront: overlay)
+    
         
         
-        
-//        let mapCenter = UIView()
-//        mapCenter.backgroundColor = UIColor.cyan
-//        mapCenter.frame.size.width = 12
-//        mapCenter.frame.size.height = 12
-//        mapCenter.layer.cornerRadius = 6
-//        mapCenter.center = centerScreenPoint
-//        overlay.addSubview(mapCenter)
-        
-        
-        Modelv2.shared.getTweets(myLocation: Model.shared.myLocation!) {
-             print("done in closure TWEETS /n /n/ n TWEETS")
-//            self.zoomMap()
-            self.addTweets()
-        }
+//        Modelv2.shared.getTweets(myLocation: Model.shared.myLocation!) {
+//             print("done in closure TWEETS /n /n/ n TWEETS")
+////            self.zoomMap()
+//         
+//            self.addTweets()
+//        }
 
+        
+        Model.shared.getTargetsNewVerComp2(myLocation: Model.shared.myLocation!) {
+            
+            self.addUsers()
+
+        }
 
 
 
     }
 
+    
+    func addUsers() {
+        
+        for target in Model.shared.userTargets {
+            
+            print(target.annotation.coordinate)
+            let pt4 = self.convertMapPtToScenePt(point: target.annotation.coordinate)
+            self.fieldScene.addTargetSpritesNew(target: target, pos: pt4)
+        }
+        
+    }
+    
+    
     func addTweets() {
         for target in Model.shared.tweetTargets {
 //            let pt = self.radarMap.convert(target.annotation.coordinate, toPointTo: self.sceneView)
-            self.radarMap.addAnnotation(target.annotation)
+//            self.radarMap.addAnnotation(target.annotation)
 //            let mapPt = self.radarMap.convert(target.annotation.coordinate, toPointTo: self.overlay)
             print(target.annotation.coordinate)
             let pt4 = self.convertMapPtToScenePt(point: target.annotation.coordinate)
@@ -220,15 +233,12 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
     func convertMapPtToScenePt(point: CLLocationCoordinate2D) -> CGPoint {
 // branch extendSpriteSceneII
 //        let mapPt = self.radarMap.convert(point, toPointTo: self.overlay)
-//
-//        let midY = (self.view.frame.height / 2)
-//
-//        let newY = mapPt.y - 2*(mapPt.y  - midY)
-//
-//        let pt2 = CGPoint(x: mapPt.x, y: newY)
-//        let pt3 = self.overlay.convert(pt2, to: self.sceneView)
+
+
+//        let pt3 = self.overlay.convert(mapPt, to: self.sceneView)
 //        let pt4 = self.sceneView.convert(pt3, to: self.sceneView.scene!)
 //        return pt4
+        
         print(point)
         let mapPt2 = self.radarMap.convert(point, toPointTo: self.sceneView)
         print(mapPt2)
@@ -252,9 +262,7 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
         if annotationView == nil {
             annotationView = CustomAnnotationView(reuseIdentifier: reuseIdentifier)
             annotationView!.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-
-            // Set the annotation view’s background color to a value determined by its longitude.
-            let hue = CGFloat(annotation.coordinate.longitude) / 100
+            let hue = CGFloat(100)
             annotationView!.backgroundColor = UIColor(hue: hue, saturation: 0.5, brightness: 1, alpha: 1)
         }
 
@@ -278,39 +286,7 @@ class RadarViewController: UIViewController, MGLMapViewDelegate, GoToDetail {
         scene.centerNode.position = newSceneCenter
         }
     
-//    func mapView(_ mapView: MGLMapView, didChange mode: MGLUserTrackingMode, animated: Bool) {
-//
-//        addTweets()
-//
-//    }
-//        guard let scene = sceneView.scene as? FieldScene else { return }
-//        let pt = self.radarMap.convert(coordinate, toPointTo: self.sceneView)
-//        let pt2 = self.sceneView.convert(pt, to: self.sceneView.scene!)
-     
-        
-//        for view in overlay.subviews {
-//            view.removeFromSuperview()
-//        }
-        
-//         for target in Model.shared.userTargets {
-//            let pt = self.radarMap.convert(target.annotation.coordinate, toPointTo: self.overlay)
-//            print(target.annotation.coordinate)
-//            print(pt)
-//            let imageView = UIView()
-//            imageView.backgroundColor = UIColor.cyan
-//            imageView.frame.size.width = 6
-//            imageView.frame.size.height = 6
-//            imageView.layer.cornerRadius = 3
-//            imageView.center = pt
-//            self.overlay.addSubview(imageView)
-//        }
-     
-        
-//        for view in overlay.subviews {
-//
-//            view.removeFromSuperview()
-//        }
-   
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

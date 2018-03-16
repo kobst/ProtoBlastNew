@@ -28,7 +28,8 @@ class LocationService {
                                 
                                 if status == INTULocationStatus.success {
                                     print("got location");
-                                    let dummyLocation = CLLocation(latitude: 40.734933, longitude: -73.990642)
+                                    let dummyLocation = CLLocation(latitude: 40.735933, longitude: -73.991642)
+                                    
                                     
                                    // let dummyLocation = currentLocation
                                     
@@ -144,7 +145,7 @@ class LocationService {
         "MadSqParkNYC": CLLocation(latitude: 40.7420411, longitude: -73.9897575),
         "TimesSquareNYC": CLLocation(latitude: 40.758899, longitude: -73.987325),
         "sunshine_cinema": CLLocation(latitude: 40.7231256, longitude: -73.9921055),
-        "IrvingPlaza" : CLLocation(latitude: 40.734933, longitude: -73.990642),
+        "IrvingPlaza" : CLLocation(latitude: 40.734933, longitude: -73.9906367),
         "unionfarenyc": CLLocation(latitude: 40.737899, longitude: -73.993489),
         "highlinenyc" : CLLocation(latitude: 40.7479965, longitude: -74.0069589),
         "WSPConservancy": CLLocation(latitude: 40.7308228,longitude: -73.997332),
@@ -169,7 +170,7 @@ class LocationService {
         "Almond_NYC": CLLocation(latitude: 40.740085, longitude: -73.9909449),
         "BarnJoo": CLLocation(latitude: 40.7388458, longitude: -73.9922692),
         "milkbarstore": CLLocation(latitude: 40.7319039, longitude: -73.9879422),
-        "BNUnionSquareNY": CLLocation(latitude: 40.7369432, longitude: -73.9918239)
+        "BNUnionSquareNY": CLLocation(latitude: 40.7369432, longitude: -73.9918186)
     ]
     
     

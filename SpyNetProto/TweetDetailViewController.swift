@@ -75,6 +75,7 @@ class TweetDetailViewController: UIViewController {
         let cgVersion = target?.texture!.cgImage()
         profileImage.image = UIImage(cgImage: cgVersion!)
         tweetLabel.text = tweet.message
+        print(tweet.annotation.coordinate)
 //        tweetLabel.text = "\(targetSprite?.target?.lat)..\(targetSprite?.target?.lon)"
         
         

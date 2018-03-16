@@ -91,12 +91,12 @@ class FieldScene: SKScene, AddTargetProtocol {
 //        addChild(background)
         
         
-//        centerNode.size.width = 15
-//        centerNode.size.height = 15
-//    
-//        centerNode.color = UIColor.red
-//        centerNode.position = CGPoint(x: 0, y: 0)
-//        background.position = CGPoint(x: 0, y: 0)
+        centerNode.size.width = 10
+        centerNode.size.height = 10
+    
+        centerNode.color = UIColor.red
+        centerNode.position = CGPoint(x: 0, y: 0)
+        background.position = CGPoint(x: 0, y: 0)
 //        addChild(centerNode)
         
 //        addMapScene(map: map)
@@ -106,7 +106,7 @@ class FieldScene: SKScene, AddTargetProtocol {
 //        mapNode.scnScene = scn
 //        self.addChild(mapNode)
 
-        self.isUserInteractionEnabled = true
+        self.isUserInteractionEnabled = false // true
         
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         self.backgroundColor = UIColor.clear
@@ -143,7 +143,7 @@ class FieldScene: SKScene, AddTargetProtocol {
         sprite.isHidden = true
         self.addChild(sprite)
         sprite.animateImage()
-        sprite.applySize()
+//        sprite.applySize()
         
     }
     
@@ -239,9 +239,9 @@ class FieldScene: SKScene, AddTargetProtocol {
         
         //position the camera on the gamescene.
         cam.position = CGPoint(x: 0, y: 0)
-        centerNode.position = CGPoint(x: 0, y: 20)
+//        centerNode.position = CGPoint(x: 0, y: 20)
 //        centerNode.position = CGPoint(x: 0, y: 0)
-        Model.shared.myScreenOrigin = CGPoint(x: 0, y: 0)
+        Model.shared.myScreenOrigin = CGPoint(x: 0, y: -200)
         
   
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanFrom))
@@ -268,13 +268,14 @@ class FieldScene: SKScene, AddTargetProtocol {
         if let positionInScene = touch?.location(in: self) {
             
             let nodeAtPoint = atPoint(positionInScene)
-         
+          
             
             switch nodeAtPoint {
                 
             case is TargetSpriteNew:
                 let selectedTarget = nodeAtPoint as! TargetSpriteNew
                 print(selectedTarget.target.name)
+                print(selectedTarget.origPos)
             
                 delegateMainVC?.goToDetail(target: selectedTarget)
                 
@@ -309,7 +310,7 @@ class FieldScene: SKScene, AddTargetProtocol {
 
         for targetSprite in array2 {
             
-                targetSprite.applySize()
+//                targetSprite.applySize()
                 
                 targetSprite.changePhysicsBody()
                 
@@ -389,7 +390,7 @@ class FieldScene: SKScene, AddTargetProtocol {
 //            profileNode.position = CGPoint(x: Model.shared.myScreenOrigin.x, y: Model.shared.myScreenOrigin.y - 200)
             
             
-            centerNode.position = Model.shared.myScreenOrigin
+//            centerNode.position = Model.shared.myScreenOrigin
          
             updateTargetSpriteNewVersion()
             //            fade()

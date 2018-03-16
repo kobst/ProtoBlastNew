@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpyNetProto/LocationService.swift"
-            timestampString = "538503408.833881"
+            timestampString = "538971902.1444269"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
             landmarkName = "getLocation(completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpyNetProto/RadarViewController.swift"
-            timestampString = "538603983.755118"
+            timestampString = "542924848.37993"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
             landmarkName = "zoomMap()"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpyNetProto/NewClassVersions.swift"
-            timestampString = "538442965.8281111"
+            timestampString = "542924848.400614"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "440"
-            endingLineNumber = "440"
+            startingLineNumber = "439"
+            endingLineNumber = "439"
             landmarkName = "animateImage()"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpyNetProto/NewClassVersions.swift"
-            timestampString = "538442965.830985"
+            timestampString = "542924848.40213"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "464"
-            endingLineNumber = "464"
+            startingLineNumber = "463"
+            endingLineNumber = "463"
             landmarkName = "applySize()"
             landmarkType = "7">
          </BreakpointContent>
@@ -105,13 +105,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SpyNetProto/RadarViewController.swift"
-            timestampString = "538603983.755659"
+            filePath = "SpyNetProto/FieldSceneNew.swift"
+            timestampString = "542924848.403478"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
-            landmarkName = "convertMapPtToScenePt(point:)"
+            startingLineNumber = "362"
+            endingLineNumber = "362"
+            landmarkName = "handlePanFrom(recognizer:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

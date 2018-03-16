@@ -84,7 +84,7 @@ class Model {
     var myDraggedLocation: CLLocationCoordinate2D?
     
     var myHeading: CLLocationDirection?
-    var myScreenOrigin = CGPoint(x: 0, y: 100)
+    var myScreenOrigin = CGPoint(x: 0, y: -200)
     var dateFormatter = DateFormatter()
 
     
